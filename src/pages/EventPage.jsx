@@ -42,15 +42,17 @@ export const EventPage = () => {
   const { event, categories, users } = useLoaderData();
   const [modalEditOpen, setModalEditOpen] = useState(false);
   const [alertDeleteOpen, setAlertDeleteOpen] = useState(false);
+  const [updatedEvent, setUpdatedEvent] = useState(event);
   const toast = ChakraUseToast();
 
   const eventCategories = categories.filter((category) =>
-    event.categoryIds.includes(category.id)
+    updatedEvent.categoryIds.includes(category.id)
   );
 
-  const createdBy = users.find((user) => user.id === event.createdBy);
+  const createdBy = users.find((user) => user.id === updatedEvent.createdBy);
 
   const handleEventUpdate = (updatedEvent) => {
+    setUpdatedEvent(updatedEvent);
     toast({
       title: "Event updated",
       description: "The event has been successfully updated.",
@@ -63,7 +65,7 @@ export const EventPage = () => {
   return (
     <Center>
       <Box
-        width={["90%", "80%", "60%"]} // Responsive width: 90% on mobile, 80% on tablet, 60% on desktop
+        width={["90%", "80%", "60%"]}
         bg="blue.100"
         borderRadius="xl"
         mt={1}
@@ -79,13 +81,13 @@ export const EventPage = () => {
 
         <Center>
           <Heading fontSize={["xl", "2xl", "3xl"]} fontWeight="bold" pb={6}>
-            {event.title}
+            {updatedEvent.title}
           </Heading>
         </Center>
 
         <Image
-          src={event.image}
-          alt={event.title}
+          src={updatedEvent.image}
+          alt={updatedEvent.title}
           borderRadius="sm"
           boxSize="100%"
           objectFit="cover"
@@ -101,12 +103,12 @@ export const EventPage = () => {
             color="gray.600"
             textTransform="uppercase"
           >
-            {event.description}
+            {updatedEvent.description}
           </Text>
 
           <Text fontSize={["sm", "md", "md"]}>
             Start:{" "}
-            {new Date(event.startTime).toLocaleString([], {
+            {new Date(updatedEvent.startTime).toLocaleString([], {
               dateStyle: "medium",
               timeStyle: "short",
               hour24: true,
@@ -114,7 +116,7 @@ export const EventPage = () => {
           </Text>
           <Text fontSize={["sm", "md", "md"]}>
             End:{" "}
-            {new Date(event.endTime).toLocaleString([], {
+            {new Date(updatedEvent.endTime).toLocaleString([], {
               dateStyle: "medium",
               timeStyle: "short",
               hour24: true,
@@ -184,7 +186,7 @@ export const EventPage = () => {
         <EditEvent
           isOpen={modalEditOpen}
           onClose={() => setModalEditOpen(false)}
-          mainEvent={event}
+          mainEvent={updatedEvent}
           setMainEvent={handleEventUpdate}
           categories={categories}
         />
@@ -192,7 +194,7 @@ export const EventPage = () => {
         <DeleteEvent
           isOpen={alertDeleteOpen}
           onClose={() => setAlertDeleteOpen(false)}
-          event={event}
+          event={updatedEvent}
         />
       </Box>
     </Center>
