@@ -4,7 +4,7 @@ import { Button, Center, Flex, Heading } from "@chakra-ui/react";
 
 export const Navigation = () => (
   <Flex direction="column" align="center" p={4} backgroundColor="blue.800">
-    <Flex w="full" justify="flex-start">
+    <Flex w="full" justify="flex-end">
       <Link to="/new">
         <Button
           w="120px"

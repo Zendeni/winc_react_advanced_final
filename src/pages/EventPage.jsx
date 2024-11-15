@@ -62,17 +62,23 @@ export const EventPage = () => {
 
   return (
     <Center>
-      <Box width="60%" bg="blue.100" borderRadius="xl" mt={1} p={6}>
+      <Box
+        width={["90%", "80%", "60%"]} // Responsive width: 90% on mobile, 80% on tablet, 60% on desktop
+        bg="blue.100"
+        borderRadius="xl"
+        mt={1}
+        p={6}
+      >
         <Link to="/">
           <Tooltip label="All events">
-            <Button fontWeight="bold" textColor="gray.400" size="md">
+            <Button fontWeight="bold" textColor="black.400" size="md">
               {"< All events"}
             </Button>
           </Tooltip>
         </Link>
 
         <Center>
-          <Heading fontSize="2xl" fontWeight="bold" pb={6}>
+          <Heading fontSize={["xl", "2xl", "3xl"]} fontWeight="bold" pb={6}>
             {event.title}
           </Heading>
         </Center>
@@ -89,7 +95,7 @@ export const EventPage = () => {
 
         <SimpleGrid columns={1} spacing={5}>
           <Text
-            fontSize="lg"
+            fontSize={["sm", "lg", "lg"]}
             fontWeight="bold"
             fontStyle="italic"
             color="gray.600"
@@ -98,7 +104,7 @@ export const EventPage = () => {
             {event.description}
           </Text>
 
-          <Text>
+          <Text fontSize={["sm", "md", "md"]}>
             Start:{" "}
             {new Date(event.startTime).toLocaleString([], {
               dateStyle: "medium",
@@ -106,7 +112,7 @@ export const EventPage = () => {
               hour24: true,
             })}
           </Text>
-          <Text>
+          <Text fontSize={["sm", "md", "md"]}>
             End:{" "}
             {new Date(event.endTime).toLocaleString([], {
               dateStyle: "medium",
@@ -133,13 +139,13 @@ export const EventPage = () => {
 
           {createdBy && (
             <Center>
-              <Text fontSize="sm" fontWeight="bold">
+              <Text fontSize={["sm", "md", "lg"]} fontWeight="bold">
                 Created by: {createdBy.name}
               </Text>
               <Image
                 src={createdBy.image}
                 alt={createdBy.name}
-                boxSize="80px"
+                boxSize={["60px", "80px", "100px"]}
                 objectFit="cover"
                 borderRadius="full"
                 m={2}
@@ -149,10 +155,10 @@ export const EventPage = () => {
 
           <Center mt={10}>
             <Button
-              w="100px"
+              w={["80px", "100px", "100px"]}
               mr={8}
               fontWeight="bold"
-              fontSize="lg"
+              fontSize={["md", "lg", "lg"]}
               borderRadius="md"
               backgroundColor="gray.300"
               _hover={{ backgroundColor: "green.300" }}
@@ -162,9 +168,9 @@ export const EventPage = () => {
             </Button>
 
             <Button
-              w="100px"
+              w={["80px", "100px", "100px"]}
               fontWeight="bold"
-              fontSize="lg"
+              fontSize={["md", "lg", "lg"]}
               borderRadius="md"
               backgroundColor="gray.300"
               _hover={{ backgroundColor: "red.300" }}

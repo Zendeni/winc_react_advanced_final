@@ -67,7 +67,7 @@ export const CreateEventPage = () => {
     if (event.target.checked) {
       setCategoryIds([...categoryIds, Number(event.target.id)]);
     } else {
-      setCategoryIds(categoryIds.filter((id) => id != event.target.id));
+      setCategoryIds(categoryIds.filter((id) => id !== event.target.id));
     }
   };
 
@@ -76,8 +76,13 @@ export const CreateEventPage = () => {
   };
 
   const handleResetButton = () => {
-    setCategoryIds([]);
-    setKeyForm((prev) => prev + 1);
+    const isConfirmed = window.confirm(
+      "Are you sure you want to reset the form? This will remove all entered data."
+    );
+    if (isConfirmed) {
+      setCategoryIds([]);
+      setKeyForm((prev) => prev + 1);
+    }
   };
 
   const addEvent = async (event) => {
@@ -127,7 +132,7 @@ export const CreateEventPage = () => {
       console.error(`Error updating event: ${response.statusText}`);
       toast({
         toastId,
-        title: "Not added succesfully",
+        title: "Not added successfully",
         description: "The event has not been added, an error has occurred",
         status: "error",
         duration: 3000,
@@ -157,8 +162,7 @@ export const CreateEventPage = () => {
               backgroundColor={"gray.100"}
               textColor={"black"}
               mt={2}
-            ></Input>
-
+            />
             <Textarea
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
@@ -172,12 +176,10 @@ export const CreateEventPage = () => {
               }}
               backgroundColor={"gray.100"}
               mt={2}
-            ></Textarea>
-
+            />
             <Input
               onChange={(e) => setImageUrl(e.target.value)}
               required
-              rows={1}
               placeholder="Image URL"
               _placeholder={{
                 opacity: 1,
@@ -187,12 +189,10 @@ export const CreateEventPage = () => {
               }}
               backgroundColor={"gray.100"}
               mt={2}
-            ></Input>
-
+            />
             <Input
               onChange={(e) => setLocation(e.target.value)}
               required
-              rows={1}
               placeholder="location"
               _placeholder={{
                 opacity: 1,
@@ -202,8 +202,7 @@ export const CreateEventPage = () => {
               }}
               backgroundColor={"gray.100"}
               mt={2}
-            ></Input>
-
+            />
             <Text mt={2} ml={2} fontWeight={"semibold"} textColor={"gray.800"}>
               Start Date/time:
             </Text>
@@ -218,8 +217,7 @@ export const CreateEventPage = () => {
               color={"gray.600"}
               fontWeight={"semibold"}
               mt={0}
-            ></Input>
-
+            />
             <Text mt={2} ml={2} fontWeight={"semibold"} textColor={"gray.800"}>
               End Date/time:
             </Text>
@@ -234,8 +232,7 @@ export const CreateEventPage = () => {
               color={"gray.600"}
               fontWeight={"semibold"}
               mt={0}
-            ></Input>
-
+            />
             <CheckboxGroup colorScheme="blue" isRequired>
               <Text
                 mt={3}
@@ -245,7 +242,6 @@ export const CreateEventPage = () => {
               >
                 Select categories:
               </Text>
-
               <Stack spacing={7} direction={"row"} ml={2}>
                 {categories.map((category) => (
                   <Checkbox
@@ -263,7 +259,6 @@ export const CreateEventPage = () => {
                 ))}
               </Stack>
             </CheckboxGroup>
-
             <Select
               placeholder="Select user"
               backgroundColor={"gray.100"}
@@ -280,11 +275,11 @@ export const CreateEventPage = () => {
               ))}
             </Select>
           </Flex>
-
           <Center>
             <Button
-              type="submit"
-              id="form-create-event"
+              type="button"
+              form="form-create-event"
+              onClick={handleCancel}
               mt={10}
               mb={5}
               fontWeight={"bold"}
@@ -293,10 +288,10 @@ export const CreateEventPage = () => {
               width="150px"
               borderRadius={"md"}
               backgroundColor={"gray.200"}
-              _hover={{ backgroundColor: "green.300" }}
+              _hover={{ backgroundColor: "red.300" }}
               isLoading={loading}
             >
-              Add
+              Cancel
             </Button>
             <Button
               type="reset"
@@ -311,15 +306,14 @@ export const CreateEventPage = () => {
               width="150px"
               borderRadius={"md"}
               backgroundColor={"gray.200"}
-              _hover={{ backgroundColor: "green.300" }}
+              _hover={{ backgroundColor: "blue.300" }}
               isLoading={loading}
             >
               Reset
             </Button>
             <Button
-              type="button"
+              type="submit"
               form="form-create-event"
-              onClick={handleCancel}
               mt={10}
               mb={5}
               ml={5}
@@ -332,7 +326,7 @@ export const CreateEventPage = () => {
               _hover={{ backgroundColor: "green.300" }}
               isLoading={loading}
             >
-              Cancel
+              Add
             </Button>
           </Center>
         </form>

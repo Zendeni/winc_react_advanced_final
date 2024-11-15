@@ -28,7 +28,7 @@
     {
       "id": 2,
       "createdBy": 1,
-      "title": "Laser Tag mania!",
+      "title": "Laser Tag mania!2",
       "description": "Let's play laser tag!",
       "image": "https://www.ctvnews.ca/polopoly_fs/1.5118552.1600965663!/httpImage/image.jpg_gen/derivatives/landscape_1020/image.jpg",
       "categoryIds": [
@@ -36,16 +36,16 @@
         1
       ],
       "location": "Blinded by the Lights Laser Tag, 15 Main St.",
-      "startTime": "2023-04-06T14:46:00.000Z",
-      "endTime": "2023-10-05T13:46:00.000Z",
+      "startTime": "2023-04-06T08:46:00.000Z",
+      "endTime": "2023-10-05T07:46:00.000Z",
       "imageUrl": "https://www.ctvnews.ca/polopoly_fs/1.5118552.1600965663!/httpImage/image.jpg_gen/derivatives/landscape_1020/image.jpg",
-      "startDateTime": "2023-04-06T16:46",
-      "endDateTime": "2023-10-05T15:46"
+      "startDateTime": "2023-04-06T10:46",
+      "endDateTime": "2023-10-05T09:46"
     },
     {
       "id": 3,
       "createdBy": 2,
-      "title": "Badminton game",
+      "title": "Badminton game!",
       "description": "Hit that shuttle!",
       "image": "https://wincacademy.github.io/webpages/media/pexels-vladvictoria-2202685.jpg",
       "categoryIds": [
@@ -53,8 +53,11 @@
         2
       ],
       "location": "The Park",
-      "startTime": "2023-03-15T12:00:00.000Z",
-      "endTime": "2023-03-15T13:30:00.000Z"
+      "startTime": "2023-03-15T11:00:00.000Z",
+      "endTime": "2023-03-15T12:30:00.000Z",
+      "imageUrl": "https://wincacademy.github.io/webpages/media/pexels-vladvictoria-2202685.jpg",
+      "startDateTime": "2023-03-15T12:00",
+      "endDateTime": "2023-03-15T13:30"
     },
     {
       "id": 4,

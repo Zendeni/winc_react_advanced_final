@@ -41,7 +41,7 @@ export const EventsPage = () => {
   return (
     <Box>
       <Center>
-        <Flex flexDir="column" wrap="wrap">
+        <Flex flexDir="column" wrap="wrap" w="full" align="center">
           <Input
             placeholder="Search event"
             textAlign="left"
@@ -50,7 +50,7 @@ export const EventsPage = () => {
             textColor="gray.800"
             fontWeight="semibold"
             onChange={handleChange}
-            w={[500]}
+            w={["90%", "500px", "500px"]}
             mt={1}
             mb={3}
           />
@@ -66,7 +66,7 @@ export const EventsPage = () => {
       </Center>
 
       {selectedEvents.length > 0 ? (
-        <SimpleGrid columns={3} gap={6} p={3}>
+        <SimpleGrid columns={[1, 2, 3]} gap={6} p={3}>
           {selectedEvents.map((event) => (
             <EventCard key={event.id} event={event} categories={categories} />
           ))}
