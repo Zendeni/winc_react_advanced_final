@@ -16,7 +16,7 @@ Built with **React**, **Chakra UI**, and **React Router**, this React Advanced f
 ```bash
 npm install
 
-npm build
+npm run build
 
 npm run dev
 
