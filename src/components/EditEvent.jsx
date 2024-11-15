@@ -13,6 +13,7 @@ import {
   Stack,
   Textarea,
   useToast,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 export const EditEvent = ({
@@ -33,6 +34,8 @@ export const EditEvent = ({
     endDateTime: "",
   });
   const [loading, setLoading] = useState(false);
+
+  const modalSize = useBreakpointValue({ base: "full", md: "xl" });
 
   useEffect(() => {
     if (isOpen && mainEvent) {
@@ -111,57 +114,97 @@ export const EditEvent = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+    <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
       <ModalOverlay />
-      <ModalContent backgroundColor="blue.50">
-        <ModalHeader>Edit Event</ModalHeader>
+      <ModalContent
+        backgroundColor="blue.50"
+        borderRadius={useBreakpointValue({ base: "0", md: "md" })}
+        p={useBreakpointValue({ base: "4", md: "6" })}
+      >
+        <ModalHeader fontSize={useBreakpointValue({ base: "lg", md: "xl" })}>
+          Edit Event
+        </ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit}>
             <Stack spacing={4}>
-              <FormLabel>Title</FormLabel>
+              <FormLabel
+                fontSize={useBreakpointValue({ base: "sm", md: "md" })}
+              >
+                Title
+              </FormLabel>
               <Input
                 name="title"
                 value={formState.title}
                 onChange={handleFormChange}
                 required
+                size={useBreakpointValue({ base: "sm", md: "md" })}
               />
-              <FormLabel>Description</FormLabel>
+              <FormLabel
+                fontSize={useBreakpointValue({ base: "sm", md: "md" })}
+              >
+                Description
+              </FormLabel>
               <Textarea
                 name="description"
                 value={formState.description}
                 onChange={handleFormChange}
                 required
+                size={useBreakpointValue({ base: "sm", md: "md" })}
               />
-              <FormLabel>Image URL</FormLabel>
+              <FormLabel
+                fontSize={useBreakpointValue({ base: "sm", md: "md" })}
+              >
+                Image URL
+              </FormLabel>
               <Input
                 name="imageUrl"
                 value={formState.imageUrl}
                 onChange={handleFormChange}
                 required
+                size={useBreakpointValue({ base: "sm", md: "md" })}
               />
-              <FormLabel>Location</FormLabel>
+              <FormLabel
+                fontSize={useBreakpointValue({ base: "sm", md: "md" })}
+              >
+                Location
+              </FormLabel>
               <Input
                 name="location"
                 value={formState.location}
                 onChange={handleFormChange}
+                size={useBreakpointValue({ base: "sm", md: "md" })}
               />
-              <FormLabel>Start Time</FormLabel>
+              <FormLabel
+                fontSize={useBreakpointValue({ base: "sm", md: "md" })}
+              >
+                Start Time
+              </FormLabel>
               <Input
                 type="datetime-local"
                 name="startDateTime"
                 value={formState.startDateTime}
                 onChange={handleFormChange}
                 required
+                size={useBreakpointValue({ base: "sm", md: "md" })}
               />
-              <FormLabel>End Time</FormLabel>
+              <FormLabel
+                fontSize={useBreakpointValue({ base: "sm", md: "md" })}
+              >
+                End Time
+              </FormLabel>
               <Input
                 type="datetime-local"
                 name="endDateTime"
                 value={formState.endDateTime}
                 onChange={handleFormChange}
                 required
+                size={useBreakpointValue({ base: "sm", md: "md" })}
               />
-              <FormLabel>Categories</FormLabel>
+              <FormLabel
+                fontSize={useBreakpointValue({ base: "sm", md: "md" })}
+              >
+                Categories
+              </FormLabel>
               <Stack spacing={1}>
                 {categories.map((category) => (
                   <Checkbox
@@ -169,6 +212,7 @@ export const EditEvent = ({
                     id={category.id.toString()}
                     isChecked={formState.categoryIds.includes(category.id)}
                     onChange={handleCheckboxChange}
+                    size={useBreakpointValue({ base: "sm", md: "md" })}
                   >
                     {category.name}
                   </Checkbox>
@@ -176,10 +220,19 @@ export const EditEvent = ({
               </Stack>
             </Stack>
             <ModalFooter>
-              <Button colorScheme="blue" type="submit" isLoading={loading}>
+              <Button
+                colorScheme="blue"
+                type="submit"
+                isLoading={loading}
+                size={useBreakpointValue({ base: "sm", md: "md" })}
+              >
                 Save
               </Button>
-              <Button onClick={onClose} ml={3}>
+              <Button
+                onClick={onClose}
+                ml={3}
+                size={useBreakpointValue({ base: "sm", md: "md" })}
+              >
                 Cancel
               </Button>
             </ModalFooter>
