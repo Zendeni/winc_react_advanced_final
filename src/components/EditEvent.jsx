@@ -166,8 +166,8 @@ export const EditEvent = ({
                 {categories.map((category) => (
                   <Checkbox
                     key={category.id}
-                    id={category.id}
-                    checked={formState.categoryIds.includes(category.id)}
+                    id={category.id.toString()}
+                    isChecked={formState.categoryIds.includes(category.id)}
                     onChange={handleCheckboxChange}
                   >
                     {category.name}

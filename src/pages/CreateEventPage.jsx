@@ -39,14 +39,16 @@ export const CreateEventPage = () => {
   const toast = useToast();
   const toastId = "create-event-toast";
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [location, setLocation] = useState("");
-  const [startDateTime, setStartDateTime] = useState("");
-  const [endDateTime, setEndDateTime] = useState("");
-  const [categoryIds, setCategoryIds] = useState([]);
-  const [userId, setUserId] = useState("");
+  const [formState, setFormState] = useState({
+    title: "",
+    description: "",
+    imageUrl: "",
+    location: "",
+    startDateTime: "",
+    endDateTime: "",
+    categoryIds: [],
+    userId: "",
+  });
 
   const [loading, setLoading] = useState(false);
   const [keyForm, setKeyForm] = useState(0);
@@ -63,12 +65,22 @@ export const CreateEventPage = () => {
     return new Date(date.getTime()).toISOString();
   };
 
-  const handleCheckBox = (event) => {
-    if (event.target.checked) {
-      setCategoryIds([...categoryIds, Number(event.target.id)]);
-    } else {
-      setCategoryIds(categoryIds.filter((id) => id !== event.target.id));
-    }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { id, checked } = e.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      categoryIds: checked
+        ? [...prevState.categoryIds, Number(id)]
+        : prevState.categoryIds.filter((catId) => catId !== Number(id)),
+    }));
   };
 
   const handleCancel = () => {
@@ -80,33 +92,45 @@ export const CreateEventPage = () => {
       "Are you sure you want to reset the form? This will remove all entered data."
     );
     if (isConfirmed) {
-      setCategoryIds([]);
+      setFormState({
+        title: "",
+        description: "",
+        imageUrl: "",
+        location: "",
+        startDateTime: "",
+        endDateTime: "",
+        categoryIds: [],
+        userId: "",
+      });
       setKeyForm((prev) => prev + 1);
     }
   };
 
   const addEvent = async (event) => {
     event.preventDefault();
-    if (categoryIds.length < 1) {
-      window.alert("One or more categories are required !");
+
+    if (formState.categoryIds.length < 1) {
+      window.alert("One or more categories are required!");
       return;
     }
-    if (endDateTime <= startDateTime) {
-      window.alert("The end date/time must be after the start date/time !");
+    if (formState.endDateTime <= formState.startDateTime) {
+      window.alert("The end date/time must be after the start date/time!");
       return;
     }
 
     setLoading(true);
-    const startDateTimeUTC = convertLocalToUTC(startDateTime);
-    const endDateTimeUTC = convertLocalToUTC(endDateTime);
+
+    const startDateTimeUTC = convertLocalToUTC(formState.startDateTime);
+    const endDateTimeUTC = convertLocalToUTC(formState.endDateTime);
+
     const newEvent = {
       id: undefined,
-      createdBy: userId,
-      title: title,
-      description: description,
-      image: imageUrl,
-      categoryIds: categoryIds,
-      location: location,
+      createdBy: formState.userId,
+      title: formState.title,
+      description: formState.description,
+      image: formState.imageUrl,
+      categoryIds: formState.categoryIds,
+      location: formState.location,
       startTime: startDateTimeUTC,
       endTime: endDateTimeUTC,
     };
@@ -129,7 +153,7 @@ export const CreateEventPage = () => {
       const newEventId = (await response.json()).id;
       navigate(`/event/${newEventId}`);
     } else {
-      console.error(`Error updating event: ${response.statusText}`);
+      console.error(`Error adding event: ${response.statusText}`);
       toast({
         toastId,
         title: "Not added successfully",
@@ -150,56 +174,40 @@ export const CreateEventPage = () => {
         <form id="form-create-event" key={keyForm} onSubmit={addEvent}>
           <Flex direction="column">
             <Input
-              onChange={(e) => setTitle(e.target.value)}
+              name="title"
+              value={formState.title}
+              onChange={handleInputChange}
               required
-              placeholder="title event"
-              _placeholder={{
-                opacity: 1,
-                color: "gray.600",
-                fontWeight: "semibold",
-                fontStyle: "italic",
-              }}
+              placeholder="Title of the event"
               backgroundColor={"gray.100"}
               textColor={"black"}
               mt={2}
             />
             <Textarea
-              onChange={(e) => setDescription(e.target.value)}
+              name="description"
+              value={formState.description}
+              onChange={handleInputChange}
               rows={4}
               required
-              placeholder="description"
-              _placeholder={{
-                opacity: 1,
-                color: "gray.600",
-                fontWeight: "semibold",
-                fontStyle: "italic",
-              }}
+              placeholder="Description"
               backgroundColor={"gray.100"}
               mt={2}
             />
             <Input
-              onChange={(e) => setImageUrl(e.target.value)}
+              name="imageUrl"
+              value={formState.imageUrl}
+              onChange={handleInputChange}
               required
               placeholder="Image URL"
-              _placeholder={{
-                opacity: 1,
-                color: "gray.600",
-                fontWeight: "semibold",
-                fontStyle: "italic",
-              }}
               backgroundColor={"gray.100"}
               mt={2}
             />
             <Input
-              onChange={(e) => setLocation(e.target.value)}
+              name="location"
+              value={formState.location}
+              onChange={handleInputChange}
               required
-              placeholder="location"
-              _placeholder={{
-                opacity: 1,
-                color: "gray.600",
-                fontWeight: "semibold",
-                fontStyle: "italic",
-              }}
+              placeholder="Location"
               backgroundColor={"gray.100"}
               mt={2}
             />
@@ -207,11 +215,11 @@ export const CreateEventPage = () => {
               Start Date/time:
             </Text>
             <Input
+              name="startDateTime"
               type="datetime-local"
               required
-              placeholder="Select Date and Time"
-              size="md"
-              onChange={(e) => setStartDateTime(e.target.value)}
+              value={formState.startDateTime}
+              onChange={handleInputChange}
               min={getCurrentDateTime()}
               backgroundColor={"gray.100"}
               color={"gray.600"}
@@ -222,11 +230,11 @@ export const CreateEventPage = () => {
               End Date/time:
             </Text>
             <Input
+              name="endDateTime"
               type="datetime-local"
               required
-              placeholder="Select Date and Time"
-              size="md"
-              onChange={(e) => setEndDateTime(e.target.value)}
+              value={formState.endDateTime}
+              onChange={handleInputChange}
               min={getCurrentDateTime()}
               backgroundColor={"gray.100"}
               color={"gray.600"}
@@ -249,10 +257,9 @@ export const CreateEventPage = () => {
                     fontWeight={"medium"}
                     fontStyle={"italic"}
                     textColor={"gray.900"}
-                    onChange={handleCheckBox}
-                    name={category.name}
                     id={category.id}
-                    value={category.name}
+                    onChange={handleCheckboxChange}
+                    isChecked={formState.categoryIds.includes(category.id)}
                   >
                     {category.name}
                   </Checkbox>
@@ -260,11 +267,13 @@ export const CreateEventPage = () => {
               </Stack>
             </CheckboxGroup>
             <Select
+              name="userId"
               placeholder="Select user"
               backgroundColor={"gray.100"}
               textColor={"grey.600"}
               fontWeight={"semibold"}
-              onChange={(e) => setUserId(Number(e.target.value))}
+              onChange={handleInputChange}
+              value={formState.userId}
               isRequired
               mt={5}
             >
